@@ -1,177 +1,138 @@
-# Working-with-Images
+Image Processing with Python
+This repository provides a collection of Python scripts and examples for working with images using various image processing libraries and techniques. Whether you're a beginner or an experienced developer, this guide will help you understand the basics of image manipulation, processing, and analysis using Python.
 
-import tkinter
-from tkinter import *
-from tkinter import ttk
-from tkinter import filedialog
-from PIL import Image, ImageTk
+Table of Contents
+Introduction
+Getting Started
+Basic Image Operations
+Image Filtering
+Image Transformation
+Object Detection
+Image Enhancement
+Image Analysis
+Contributing
+License
+Introduction
+Image processing is a crucial aspect of various fields such as computer vision, medical imaging, remote sensing, and more. Python provides a variety of libraries and tools that make it easy to perform tasks like reading, manipulating, and analyzing images.
 
-class Root(Tk):
-    def __init__(self):                                                    #Creating label
-        super(Root, self).__init__()
-        self.title("Working With Images")
-        self.minsize(640, 400)
-        instructions=tkinter.Label(self,text="Select the picture",font=("Comic Sans MS",40))
-        instructions.pack()
-        label=tkinter.Label(self)
-        label.pack()
+This repository aims to provide examples and guides for performing common image processing tasks using Python. It covers everything from basic operations like opening and displaying images to more advanced tasks like object detection and image analysis.
 
-        self.labelFrame = ttk.LabelFrame(self,text ="Open File")
-        self.labelFrame.pack(side="top",fill=None,expand=False)
+Getting Started
+To get started with image processing in Python, you'll need the following:
 
-        self.button()
+Python (3.6 or later)
+Pip (Python package manager)
+Virtual environment (recommended)
+Clone this repository to your local machine:
 
-    def button(self):                                                #Creating button
+bash
+Copy code
+git clone https://github.com/yourusername/image-processing-python.git
+Navigate to the project directory:
 
-        self.button = ttk.Button(self.labelFrame, text = "Browse A File",command = self.fileDialog)
-        self1=ttk.Button(self.labelFrame, text = "Return",command = self.destroy)
-        self.button.pack(side="top",fill=None,expand=False)
-        self1.pack(side="bottom",fill=None,expand=False)
+bash
+Copy code
+cd image-processing-python
+Install the required dependencies:
 
+bash
+Copy code
+pip install -r requirements.txt
+Basic Image Operations
+Learn how to perform basic operations on images such as reading, displaying, and saving images. The examples cover libraries like Pillow (PIL) and OpenCV.
 
-    def fileDialog(self):                                               #File dialog box
+python
+Copy code
+from PIL import Image
+import cv2
 
-        self.filename = filedialog.askopenfilename(initialdir =  "/", title = "Select A File", filetype =
-        (("jpeg files","*.jpg"),("png files","*.png"),("all files","*.*")) )
-        self.label = ttk.Label(self.labelFrame, text = "")
-        self.label.pack(fill="both",expand=True)
-        self.label.configure(text = self.filename)
+# Open and display an image using PIL
+image_pil = Image.open("example.jpg")
+image_pil.show()
 
-        global img                                                       #Opening image
-        img = Image.open(self.filename)
-        photo = ImageTk.PhotoImage(img)
+# Open and display an image using OpenCV
+image_cv2 = cv2.imread("example.jpg")
+cv2.imshow("Image", image_cv2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+Image Filtering
+Explore techniques for applying filters to images to achieve effects like blurring, sharpening, and edge detection.
 
-        self.label2 = Label(image=photo)
-        self.label2.image = photo 
-        self.label2.pack(fill="both",expand=True)
+python
+Copy code
+import cv2
 
-root = Root()
-root.mainloop()
+image = cv2.imread("example.jpg")
 
-def save_img(edit):
-    global f
-    f=0                                                                                    #Saving image
-    ch=input("Do you want to save the editted image (Y/N) : ")
-    if ch=="Y":
-        f+=1
-        save_path=input("Enter path where the image should be saved : ")
-        save_name=input("Enter name of the editted image with format : ")
-        path=save_path+"\\"+save_name
-        edit.save(path)
+# Apply Gaussian blur
+blurred_image = cv2.GaussianBlur(image, (5, 5), 0)
 
-    elif ch=="N":
-        print('------------------------------------------------')
-        pass
+# Apply edge detection
+edges = cv2.Canny(image, threshold1=30, threshold2=70)
+Image Transformation
+Learn how to perform geometric transformations on images, including resizing, rotating, and cropping.
 
-    else:
-        print("Invalid choice")
-        print('------------------------------------------------')
+python
+Copy code
+import cv2
 
+image = cv2.imread("example.jpg")
 
-c=input("Do you want to edit the selected image (Y/N) : ")
-if c=="N":
-    print('------------------------------------------------')
-    pass
+# Resize the image
+resized_image = cv2.resize(image, (width, height))
 
+# Rotate the image
+rotation_matrix = cv2.getRotationMatrix2D(center, angle, scale)
+rotated_image = cv2.warpAffine(image, rotation_matrix, (width, height))
+Object Detection
+Discover techniques for detecting objects within images using pre-trained models and libraries like OpenCV.
 
-elif c=="Y":
-    print("-------------WORKING WITH IMAGES-------------")
-    print('------------------------------------------------')
-    while True:                                                                 #Choice list
-        print("| 1.To Rotate an Image")
-        print("| 2.To Crop an Image")
-        print("| 3.To Resize an Image")
-        print("| 4.To Convert an Image into Grayscale")
-        print("| 5.To Transpose an Image")
-        print("| 6.To Split an Image into RGB values")
-        print("| 7.Exit")
-        print('------------------------------------------------')
+python
+Copy code
+import cv2
 
-        choice=int(input("-Enter your choice for performing image operations: "))
-        print('------------------------------------------------')
+# Load pre-trained classifier (e.g., face detection)
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-        if choice==7:
-            print("--------------------Thank You--------------------")
-            print('------------------------------------------------')
-            break
+image = cv2.imread("people.jpg")
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        elif choice==1:                                                           #To Rotate an Image 
-            rotate=int(input("Enter rotation angle : "))
-            rotate_img=img.rotate(rotate)
-            rotate_img.show()
-            print("Image Rotated")
-            print('------------------------------------------------')
-            save_img(rotate_img)
-            if f==1:
-                print("Rotated Image Saved")
-                print('------------------------------------------------')
+faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=4)
+Image Enhancement
+Learn how to enhance image quality using techniques like histogram equalization and contrast adjustment.
 
-        elif choice==2:                                                           #To Crop an Image
-            left=int(input("Enter left dimemsion of the cropped image : "))
-            top=int(input("Enter top dimemsion of the cropped image: "))
-            right=int(input("Enter right dimemsion of the cropped image : "))
-            bottom=int(input("Enter bottom dimemsion of the cropped image : "))	
-            try:
-                crop_img=img.crop((left,top,right,bottom))
-                crop_img.show()
-                print("Image Cropped")
-                print('------------------------------------------------')
-                save_img(crop_img)
-                if f==1:
-                    print("Cropped Image Saved")
-                    print('------------------------------------------------')
-            except SystemError:
-                print("Image cannot be cropped using the given dimensions")
-                print('------------------------------------------------')
+python
+Copy code
+import cv2
 
-        elif choice==3:                                                           #To Resize an Image
-            width=int(input("Enter width of the resized image : "))
-            height=int(input("Enter height of the resized image : "))
-            try:
-                resize_img=img.resize((width,height))		
-                resize_img.show()
-                print("Image Resized")
-                print('------------------------------------------------')
-                save_img(resize_img)
-                if f==1:
-                    print("Resized Image Saved")
-                    print('------------------------------------------------')
-            except MemoryError: 
-                print("Image cannot be resized using the given dimensions")
-                print('------------------------------------------------')
+image = cv2.imread("dark_image.jpg", cv2.IMREAD_GRAYSCALE)
 
-        elif choice==4:                                                           #To convert into grayscale 
-            grayscale=img.convert("L")
-            grayscale.show()
-            print("Image converted to Graysacle")
-            print('------------------------------------------------')
-            save_img(grayscale)
-            if f==1:
-                print("Grayscale of image is saved")
-                print('------------------------------------------------')
+# Apply histogram equalization
+equalized_image = cv2.equalizeHist(image)
 
-        elif choice==5:                                                           #To Transpose an Image
-            transpose_img=img.transpose(Image.FLIP_LEFT_RIGHT) 
-            transpose_img.show()
-            print("Image Transposed")
-            print('------------------------------------------------')
-            save_img(transpose_img)
-            if f==1:
-                print("Transposed Image Saved")
-                print('------------------------------------------------')
+# Adjust contrast using CLAHE
+clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+enhanced_image = clahe.apply(image)
+Image Analysis
+Explore techniques for analyzing images, such as finding contours, computing image gradients, and extracting color information.
 
-        elif choice==6:                                                           #To Split an Image into its RGB values 		
-            rgb=img.split()
-            print("RGB values are : ")
-            print(rgb)
-            print('------------------------------------------------')
+python
+Copy code
+import cv2
 
-        else:
-            print("Enter valid choice")
-            print('------------------------------------------------')
+image = cv2.imread("shapes.jpg")
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-else:
-    print("Invalid choice")
-    print('------------------------------------------------')
+# Find contours
+contours, hierarchy = cv2.findContours(gray_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+# Compute image gradients
+gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+Contributing
+Contributions to this repository are welcome! If you have ideas for new examples, improvements to existing code, or bug fixes, feel free to submit a pull request.
 
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Feel free to explore the provided examples and modify them to suit your specific needs. Happy coding!
