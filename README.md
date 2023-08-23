@@ -1,4 +1,5 @@
-Image Processing with Python
+**Image Processing with Python**
+
 This repository provides a collection of Python scripts and examples for working with images using various image processing libraries and techniques. Whether you're a beginner or an experienced developer, this guide will help you understand the basics of image manipulation, processing, and analysis using Python.
 
 Table of Contents
