@@ -2,6 +2,7 @@ Image Processing with Python
 This repository provides a collection of Python scripts and examples for working with images using various image processing libraries and techniques. Whether you're a beginner or an experienced developer, this guide will help you understand the basics of image manipulation, processing, and analysis using Python.
 
 Table of Contents
+
 Introduction
 Getting Started
 Basic Image Operations
@@ -12,6 +13,7 @@ Image Enhancement
 Image Analysis
 Contributing
 License
+
 Introduction
 Image processing is a crucial aspect of various fields such as computer vision, medical imaging, remote sensing, and more. Python provides a variety of libraries and tools that make it easy to perform tasks like reading, manipulating, and analyzing images.
 
@@ -27,7 +29,7 @@ Clone this repository to your local machine:
 
 bash
 Copy code
-git clone https://github.com/yourusername/image-processing-python.git
+git clone https://github.com/Karthik141003/image-processing-python.git
 Navigate to the project directory:
 
 bash
